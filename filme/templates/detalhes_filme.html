@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block titulo %}
+{{ object.titulo }}
+{% endblock %}
+
+{% block content %}
+
+<main class='bg-primary_black min-h-screen w-full' xmlns="http://www.w3.org/1999/html">
+    <section class="h-screen bg-black bg-opacity-50 bg-blend-overlay relative bg-no-repeat pb-8 pl-6 flex  items-end bg-cover" style="background-image: url('{{ object.thumb.url }}');">
+        <div>
+            <h2 class="text-6xl font-semibold text-white my-4">
+                {{ object.titulo }}
+            </h2>
+            <p class=" w-11/12 md:w-5/12 font-medium text-white my-4">
+                {{ object.descricao|slice:":179" }}...
+            </p>
+            <div class="flex my-4">
+                <a href="{{ object.episodios.first.video }} ">
+                    <button class="flex items-center bg-white py-2 px-5 rounded-md" style='color:black;'>
+                        <ion-icon name="play" class="text-2xl"></ion-icon>
+                        <span class="ml-3 font-medium">
+                            Play
+                        </span>
+                    </button>
+                </a>
+            </div>
+        </div>
+    </section>
+    <section class='bg-primary_black flex justify-center py-10'>
+        <div class="p-8 w-10/12 relative" >
+            <h2 class="text-gray-200 text-3xl font-medium">
+                Descrição
+            </h2>
+            <div class="flex justify-left  items-center min-w-full  movie_lis">
+                <p class="text-gray-100 text-lg">
+                    {{ object.descricao }}
+                    <br>
+                    Visualizações:
+                    {{ object.visualizacoes }}
+                </p>
+            </div>
+            {% if object.episodios.all|length > 1 %}
+            <div style='margin-top:2rem;margin-bottom:2rem;'>
+                <h2 class="text-gray-200 text-3xl font-medium pb-2">
+                    Episódios
+
+                </h2>
+                {% for episodio in object.episodios.all %}
+                    <h3 class='text-lg py-1'>
+                        <a href="{{ episodio.video }}">
+                            <button class="bg-gray-900 bg-opacity-25 bg-blend-overlay w-full hover:bg-gray-800 bg-opacity-25 bg-blend-overlay text-gray-300 text-left py-2 px-2">
+                                <div class="grid grid-cols-2 gap-4 ">
+                                    <img src="{{ episodio.thumb.url }}" class="h-full w-2/5 flex-none">
+                                    <div class="content-center place-self-center text-left">{{ episodio }}</div>
+                                </div>
+                            </button>
+                        </a>
+                    </h3>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+    <section class='bg-primary_black flex justify-center py-10'>
+        <div class="p-8 w-10/12 relative" >
+            <h2 class="text-gray-200 text-2xl font-medium">
+                Relacionados
+            </h2>
+            <div class="flex flex-wrap items-center min-w-full movie_lis">
+                {% for filme in filmes_relacionados %}
+                <div class="m-4 bg-blue-500 overflow-hidden flex-shrink-0 rounded-md cursor-pointer h-64 w-1/3">
+                    <a href="{% url 'filme:detalhesfilme' filme.id %}">
+                            <img src="{{ filme.thumb.url }}" class="object-cover w-full h-full " alt="">
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+</main>
+
+{% endblock %}
