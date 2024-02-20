@@ -1,7 +1,7 @@
 
 
 
-web: gunicorn hashflix.wsgi --log-file -  --timeout 60
+web: gunicorn hashflix.wsgi --log-file -  --preload
 
 
 
