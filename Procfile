@@ -1,1 +1,1 @@
-web: gunicorn hashflix.wsgi --log-file -
+web: gunicorn --bind=0.0.0.0 --timeout 600 hashflix.wsgi --log-file -
